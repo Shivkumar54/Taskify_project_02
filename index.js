@@ -1,14 +1,17 @@
 const taskContainer = document.querySelector(".task_container");
 
 
-const globalStore = [];
+let globalStore = [];
 
 const generateNewCard = (taskData) => `
-<div class="col-md-6 col-lg-4" id=${taskData.id}>
+<div class="col-md-6 col-lg-4" >
       <div class="card">
         <div class="card-header d-flex justify-content-end gap-2">
           <button type="button" class="btn btn-outline-success"><i class="fas fa-pencil-alt"></i></button>
-          <button type="button" class="btn btn-outline-danger"><i class="fas fa-dumpster-fire"></i></button>
+          
+          
+          <button type="button" class="btn btn-outline-danger" id=${taskData.id} onclick="deleteCard.apply(this, arguments)">
+          <i class="fas fa-dumpster-fire" id=${taskData.id} onclick="deleteCard.apply(this, arguments)"></i></button>
         </div>
         <img src="${taskData.imageUrl}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -29,9 +32,8 @@ const loadInitialCardData = () => {
 
 
   const {cards} = JSON.parse(getCardData);
-  cards.map((cardObject) =>
-  {
-    taskContainer.insertAdjacentHTML("beforeend",generateNewCard(cardObject));
+  cards.map((cardObject) =>{
+    taskContainer.insertAdjacentHTML("beforeend", generateNewCard(cardObject));
    
     globalStore.push(cardObject);
   })
@@ -53,4 +55,30 @@ const saveChanges = () =>{
     localStorage.setItem("taskify", JSON.stringify({cards:globalStore}));
 };
 
+// delete card
+const deleteCard = (event) => {
 
+  event = window.event;
+
+  //extract the id
+
+  const targetID = event.target.id;
+  const tagname = event.target.tagName;
+
+  // we have to match
+
+  globalStore  = globalStore.filter((cardObject) => cardObject.id !== targetID);
+  localStorage.setItem("taskify", JSON.stringify({cards:globalStore}));
+  
+  // contact parent to remove
+  if(tagname ==="BUTTON"){
+    return taskContainer.removeChild(event.target.parentNode.parentNode.parentNode)
+  }
+  else
+  {
+    return taskContainer.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
+  }
+
+
+  // taskContainer.removeChild(document.getElementById(targetID));
+};
