@@ -37,14 +37,14 @@ const loadInitialCardData = () => {
     taskContainer.insertAdjacentHTML("beforeend", generateNewCard(cardObject));
    
     globalStore.push(cardObject);
-  })
+  });
 };
 
 const saveChanges = () =>{
     const taskData = {
         id: `${(Date.now)}`, //unique number for id
         imageUrl: document.getElementById("imageurl").value,
-        tastTitle: document.getElementById("tasktitle").value,
+        taskTitle: document.getElementById("tasktitle").value,
         taskType: document.getElementById("tasktype").value,
         taskDescription: document.getElementById("taskdescription").value,
     };
@@ -77,36 +77,75 @@ const deleteCard = (event) => {
   }
   else
   {
-    return taskContainer.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
+    return taskContainer.removeChild(event.target.parentNode.parentNode.parentNode.parentNode)
   }
 
-
-  // taskContainer.removeChild(document.getElementById(targetID));
+  taskContainer.removeChild(document.getElementById(targetID));
 };
 
 
-const editCard = (event) => {
-  event = window.event;
-  const targetID = event.target.id;
-  const tagname = event.target.tagName;
+// const editCard = (event) => {
+//   event = window.event;
+//   const targetID = event.target.id;
+//   const tagname = event.target.tagName;
 
-  let parentElement;
+//   let parentElement;
 
-  if(tagname === "BUTTON") {
-    parentElement = event.target.parentNode.parentNode;
-  }else{
-    parentElement = event.target.parentNode.parentNode.parentNode;
-  }
+//   if(tagname === "BUTTON") {
+//     parentElement = event.target.parentNode.parentNode;
+//   }else{
+//     parentElement = event.target.parentNode.parentNode.parentNode;
+//   }
 
 
-  let taskTitle = parentElement.childNodes[5].childNodes[1];
-  let taskDescription = parentElement.childNodes[5].childNodes[3];
-  let taskType = parentElement.childNodes[5].childNodes[5];
-  let submitButton = parentElement.childNodes[7].childNodes[1];
-  //set attributes to chnage names
+//   let taskTitle = parentElement.childNodes[5].childNodes[1];
+//   let taskDescription = parentElement.childNodes[5].childNodes[3];
+//   let taskType = parentElement.childNodes[5].childNodes[5];
+//   let submitButton = parentElement.childNodes[7].childNodes[1];
+//   //set attributes to chnage names
 
-  taskTitle.setAttribute("contenteditable", "true");
-  taskDescription.setAttribute("contenteditable", "true");
-  taskType.setAttribute("contenteditable", "true");
-  submitButton.innerHTML="Save Changes";
-}
+//   taskTitle.setAttribute("contenteditable", "true");
+//   taskDescription.setAttribute("contenteditable", "true");
+//   taskType.setAttribute("contenteditable", "true");
+//   submitButton.setAttribute("onclick", "saveEditChanges.apply(this, arguments)");
+//   submitButton.innerHTML="Save Changes";
+// };
+
+
+// const saveEditChanges = (event) => {
+//   event = window.event;
+//   const targetID = event.target.id;
+//   const tagname = event.target.tagName;
+
+//   let parentElement;
+
+//   if(tagname === "BUTTON") {
+//     parentElement = event.target.parentNode.parentNode;
+//   }else{
+//     parentElement = event.target.parentNode.parentNode.parentNode;
+//   }
+
+//   let taskTitle = parentElement.childNodes[5].childNodes[1];
+//   let taskDescription = parentElement.childNodes[5].childNodes[3];
+//   let taskType = parentElement.childNodes[5].childNodes[5];
+//   let submitButton = parentElement.childNodes[7].childNodes[1];
+
+//   const updatedData = {
+//     taskTitle : taskTitle.innerHTML,
+//     taskType : taskType.innerHTML,
+//     taskDescription : taskDescription.innerHTML,
+//   };
+
+//   globalStore = globalStore.map((task) => {
+//     if(task.id === targetID){
+//       return{
+//         id: task.id,
+//         imageUrl: task.imageUrl
+//         taskTitle: updatedData.taskTitle,
+//         taskType:updatedData.taskType,
+//         taskDescription: updatedData.taskDescription,
+//       };
+//     }
+//     return;
+//   })
+// };
